@@ -4,10 +4,10 @@ import axios from "axios";
 // Define a Novel component to represent individual novel items
 const Novel: React.FC<{ title: string }> = ({ title }) => {
     return (
-        <div className="w-1/2 xs:w-1/3 sm:w-1/5 p-1.5  hover:cursor-pointer group hover:text-themecolor">
+        <div className="flex items-center justify-center w-1/2 xs:w-1/3 sm:w-1/5 p-1.5  hover:cursor-pointer group hover:text-themecolor">
             <a href={window.location.href + "novel/" + title}
-               className="flex flex-col items-center">
-                <img src={"http://localhost:3000/api/" + title + "/cover"} className="flex h-[250px] md:h-[400px] overflow-hidden relative hover:opacity-60" alt={"Cover of " + title}/>
+               className="flex flex-col items-center w-fit h-fit border">
+                <img src={"http://localhost:3000/api/" + title + "/cover"} className="flex h-[250px] md:h-[400px] overflow-hidden relative hover:opacity-60 rounded-lg" alt={"Cover of " + title}/>
                 <div className="w-fit">{title}</div>
             </a>
         </div>
@@ -15,7 +15,19 @@ const Novel: React.FC<{ title: string }> = ({ title }) => {
 };
 
 const LandingPage: React.FC = () => {
-    const [novels, setNovels] = useState<Array<string>>([]);
+    const [novels, setNovels] = useState<Array<{
+        "title": string;
+        "source": string;
+        "tags": Array<string>;
+        "author": string;
+        "description": string;
+        "first_chapter_link": string;
+        "rating": number
+        "likes": number
+        "source_english": string;
+        "title_english": string;
+        "description_english": string;
+    }>>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -47,7 +59,7 @@ const LandingPage: React.FC = () => {
                 <h1>Novels</h1>
                 <div className="flex flex-wrap space-x-4 w-full h-full">
                     {novels.map((novel, index) => (
-                        <Novel key={index} title={novel} />
+                        <Novel key={index} title={novel["title_english"]} />
                     ))}
                 </div>
             </div>

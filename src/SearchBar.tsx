@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, ChangeEvent} from 'react';
 
-const SearchBar = () => {
+const SearchBar: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [items, setItems] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
 
     // Limit the number of results displayed
     const resultLimit = 5; // Set this to the number of results you want to show
@@ -15,12 +15,12 @@ const SearchBar = () => {
         const fetchItems = async () => {
             setLoading(true);
             try {
-                const response = await fetch('https://api.example.com/items'); // Replace with your API URL
+                const response = await fetch(import.meta.env.VITE_API_URL + '/novels/query?'); // Replace with your API URL
                 const data = await response.json();
                 setItems(data); // Assuming 'data' is an array of items
                 setFilteredItems(data);
             } catch (err) {
-                setError('Failed to fetch items');
+                setError('Failed to fetch items' + err);
             } finally {
                 setLoading(false);
             }
@@ -40,8 +40,10 @@ const SearchBar = () => {
         );
     }, [searchTerm, items]);
 
-    const handleChange = (event) => {
-        setSearchTerm(event.target.value);
+    const handleChange = (event: ChangeEvent) => {
+        if (event && event.target && event.target.value.length >= 3) {
+            setSearchTerm(event.target.value);
+        }
     };
 
     return (

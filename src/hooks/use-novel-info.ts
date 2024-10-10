@@ -23,7 +23,7 @@ export const useNovelInfo = ({novelName, setNovelInfo, setError}: NovelInfoProps
             }
         }
         if (novelName) {
-            fetchInfo();
+            fetchInfo().then();
         }
     }, [novelName, setError, setNovelInfo])
 }

@@ -5,6 +5,7 @@ import NovelChapter from '@/features/chapter/components/novel-chapter.tsx';
 import NovelsLayout from "@/components/layouts/novels-layout.tsx";
 import ToC from "@/features/table-of-contents/components/table-of-contents.tsx";
 import {NovelsRoute} from "@/app/routes/novels/novels-page.tsx";
+import SearchBar from "@/components/ui/SearchBar.tsx";
 
 const App: React.FC = () => {
     return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
                     {/* Define the route for the NovelChapter component */}
                     <Route index element={<NovelsLayout />} />
                     <Route path={"/"}>
+                        <Route path={"search"} element={<SearchBar />}/>
                         <Route
                             path="novel/:novelName/"
                             element={<NovelsRoute />} // Use the element prop to render the component

@@ -16,7 +16,7 @@ const NovelCard: React.FC<{ title: string }> = ({ title }) => {
 };
 
 const NovelsLayout: React.FC = () => {
-    const [novels, setNovels] = useState<Array<NovelInfo>>([]);
+    const [novels, setNovels] = useState<NovelInfo[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 

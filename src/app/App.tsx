@@ -1,10 +1,10 @@
 // App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import NovelChapter from './NovelChapter';
-import LandingPage from "./LandingPage.tsx";
-import ToC from "./NovelToC.tsx";
-import NovelToC from "./NovelToC.tsx";
+import NovelChapter from '@/features/chapter/components/novel-chapter.tsx';
+import NovelsLayout from "@/components/layouts/novels-layout.tsx";
+import ToC from "@/features/table-of-contents/components/table-of-contents.tsx";
+import {NovelsRoute} from "@/app/routes/novels/novels-page.tsx";
 
 const App: React.FC = () => {
     return (
@@ -12,27 +12,19 @@ const App: React.FC = () => {
             <div>
                 <Routes>
                     {/* Define the route for the NovelChapter component */}
-                    <Route index element={<LandingPage />} />
+                    <Route index element={<NovelsLayout />} />
                     <Route path={"/"}>
                         <Route
                             path="novel/:novelName/"
-                            element={<ToC />} // Use the element prop to render the component
+                            element={<NovelsRoute />} // Use the element prop to render the component
                         />
                         <Route
                             path="novel/:novelName/chapter/:chapterNumber"
                             element={<NovelChapter />} // Use the element prop to render the component
                         />
                         <Route
-                            path="novel/:novelName"
-                            element={<NovelToC />}
-                        />
-                        <Route
-                            path="novel/:novelName/"
-                            element={<NovelToC />}
-                        />
-                        <Route
                             path="novel/:novelName/toc"
-                            element={<NovelToC />}
+                            element={<ToC />}
                         />
                         <Route
                             path="*"

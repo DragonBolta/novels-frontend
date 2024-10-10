@@ -1,9 +1,10 @@
 import React, {useState, useEffect, ChangeEvent} from 'react';
+import {NovelInfo} from "@/types/api.ts";
 
 const SearchBar: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [items, setItems] = useState([]);
-    const [filteredItems, setFilteredItems] = useState([]);
+    const [items, setItems] = useState<Array<NovelInfo>>([]);
+    const [filteredItems, setFilteredItems] = useState<Array<NovelInfo>>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -18,7 +19,6 @@ const SearchBar: React.FC = () => {
                 const response = await fetch(import.meta.env.VITE_API_URL + '/novels/query?'); // Replace with your API URL
                 const data = await response.json();
                 setItems(data); // Assuming 'data' is an array of items
-                setFilteredItems(data);
             } catch (err) {
                 setError('Failed to fetch items' + err);
             } finally {
@@ -31,13 +31,15 @@ const SearchBar: React.FC = () => {
 
     // Filter items based on search term
     useEffect(() => {
-        setFilteredItems(
-            items
-                .filter(item =>
-                    item.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-                .slice(0, resultLimit) // Limit the number of results displayed
-        );
+        if (items) {
+            setFilteredItems(
+                items
+                    .filter(item =>
+                        item["title_english"].toLowerCase().includes(searchTerm.toLowerCase())
+                    )
+                    .slice(0, resultLimit) // Limit the number of results displayed
+            );
+        }
     }, [searchTerm, items]);
 
     const handleChange = (event: ChangeEvent) => {

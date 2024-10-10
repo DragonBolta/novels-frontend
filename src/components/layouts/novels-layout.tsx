@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import {NovelInfo} from "@/types/api.ts";
 
-// Define a Novel component to represent individual novel items
-const Novel: React.FC<{ title: string }> = ({ title }) => {
+// Define a NovelCard component to represent individual novel items
+const NovelCard: React.FC<{ title: string }> = ({ title }) => {
     return (
         <div className="flex items-center justify-center w-1/2 xs:w-1/3 sm:w-1/5 p-1.5  hover:cursor-pointer group hover:text-themecolor">
             <a href={window.location.href + "novel/" + title}
@@ -14,20 +15,8 @@ const Novel: React.FC<{ title: string }> = ({ title }) => {
     );
 };
 
-const LandingPage: React.FC = () => {
-    const [novels, setNovels] = useState<Array<{
-        "title": string;
-        "source": string;
-        "tags": Array<string>;
-        "author": string;
-        "description": string;
-        "first_chapter_link": string;
-        "rating": number
-        "likes": number
-        "source_english": string;
-        "title_english": string;
-        "description_english": string;
-    }>>([]);
+const NovelsLayout: React.FC = () => {
+    const [novels, setNovels] = useState<Array<NovelInfo>>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -59,7 +48,7 @@ const LandingPage: React.FC = () => {
                 <h1>Novels</h1>
                 <div className="flex flex-wrap w-full h-full">
                     {novels.map((novel, index) => (
-                        <Novel key={index} title={novel["title_english"]} />
+                        <NovelCard key={index} title={novel["title_english"]} />
                     ))}
                 </div>
             </div>
@@ -67,4 +56,4 @@ const LandingPage: React.FC = () => {
     );
 }
 
-export default LandingPage;
+export default NovelsLayout;

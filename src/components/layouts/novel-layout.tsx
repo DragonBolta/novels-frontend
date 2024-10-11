@@ -1,17 +1,16 @@
 import React from 'react';
-import NovelCardList from "@/features/novels/components/novel-card-list.tsx";
 import HeaderBar from "@/components/ui/header.tsx";
+import ToC from "@/features/table-of-contents/components/table-of-contents.tsx";
 
-const NovelsLayout: React.FC = () => {
-
+const NovelLayout: React.FC = () => {
     return (
         <>
             <div className="flex flex-col items-center">
                 <HeaderBar />
-                <NovelCardList />
+                <ToC/>
             </div>
         </>
     );
 }
 
-export default NovelsLayout;
+export default NovelLayout;

@@ -1,5 +1,6 @@
 // Define a NovelCard component to represent individual novel items
-import React, {useState} from "react";
+import React from "react";
+import {Image, Tooltip} from '@mantine/core';
 
 function sanitizeFilename(filename: string): string {
     // Windows invalid characters for filenames: <>:"/\|?* and prevent control characters
@@ -24,25 +25,23 @@ function sanitizeFilename(filename: string): string {
     return sanitized;
 }
 
-const NovelCard: React.FC<{ title: string }> = ({ title }) => {
-    const [imgSrc, setImgSrc] = useState(import.meta.env.VITE_API_URL + "/api/" + sanitizeFilename(title) + "/cover");
-
-    const handleError = () => {
-        // Set the fallback image if the image URL is invalid or cannot be loaded
-        setImgSrc("/no_image.png");
-    };
+const NovelCard: React.FC<{ title: string }> = ({title}) => {
+    const imgSrc = import.meta.env.VITE_API_URL + "/api/" + sanitizeFilename(title) + "/cover";
 
     return (
-        <div className="flex items-center justify-center w-1/2 xs:w-1/3 sm:w-1/5 p-1.5  hover:cursor-pointer group hover:text-themecolor">
-            <a href={window.location.href + "novel/" + sanitizeFilename(title)}
+        <div
+            className="flex items-center justify-center w-1/2 xs:w-1/3 sm:w-1/5 p-1.5 hover:cursor-pointer group hover:text-themecolor">
+            <a href={import.meta.env.VITE_SITE_URL + "/novel/" + sanitizeFilename(title)}
                className="flex flex-col items-center">
-                <img
+                <Image
                     src={imgSrc}
-                    onError={handleError}  // If the image fails, trigger handleError
-                    className="flex h-[250px] md:h-[400px] overflow-hidden relative hover:opacity-60 rounded-lg"
+                    fallbackSrc={"/no_image.png"} // If the image fails, trigger handleError
+                    className="flex h-[250px] md:h-[400px] w-[100px] md:w-[250px] m-1.5 overflow-hidden relative hover:opacity-60 rounded-lg"
                     alt={"Cover of " + title}
                 />
-                <div className="w-fit">{title}</div>
+                <Tooltip label={title} openDelay={250} position="top">
+                    <p className="w-fit mt-1.5 mb-1.5 line-clamp-1">{title}</p>
+                </Tooltip>
             </a>
         </div>
     );

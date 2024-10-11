@@ -1,7 +1,7 @@
-import NovelChapter from "@/features/chapter/components/novel-chapter.tsx";
+import ChapterLayout from "@/components/layouts/chapter-layout.tsx";
 
 export const ChapterRoute = () => {
     return (
-        <NovelChapter />
+        <ChapterLayout />
     )
 }

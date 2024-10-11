@@ -19,7 +19,7 @@ const AppProvider= ({ children }: AppProviderProps) => {
             }),
     );
     return (
-        <MantineProvider>
+        <MantineProvider defaultColorScheme={"light"}>
             <React.Suspense
                 fallback={
                     <div className="flex h-screen w-screen items-center justify-center">

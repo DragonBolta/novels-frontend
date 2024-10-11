@@ -1,5 +1,5 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import SearchBar from "@/components/ui/SearchBar.tsx";
+import SearchBar from "@/components/ui/search-bar.tsx";
 import {useMemo} from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -7,6 +7,13 @@ export const createAppRouter = () => {
     return createBrowserRouter([
         {
             path: "/",
+            lazy: async () => {
+                const {NovelsRoute} = await import ('./routes/novels/novels-page');
+                return {Component: NovelsRoute};
+            }
+        },
+        {
+            path: "/novels",
             lazy: async () => {
                 const {NovelsRoute} = await import ('./routes/novels/novels-page');
                 return {Component: NovelsRoute};

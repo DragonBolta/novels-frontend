@@ -1,17 +1,17 @@
 import React from 'react';
-import NovelCardList from "@/features/novels/components/novel-card-list.tsx";
 import HeaderBar from "@/components/ui/header.tsx";
+import NovelChapter from "@/features/chapter/components/novel-chapter.tsx";
 
-const NovelsLayout: React.FC = () => {
+const ChapterLayout: React.FC = () => {
 
     return (
         <>
             <div className="flex flex-col items-center">
                 <HeaderBar />
-                <NovelCardList />
+                <NovelChapter/>
             </div>
         </>
     );
 }
 
-export default NovelsLayout;
+export default ChapterLayout;

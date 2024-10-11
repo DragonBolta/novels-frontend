@@ -5,7 +5,7 @@ import {NovelInfo} from "@/types/api.ts";
 
 // Fetch the chapter list
 export const getNovelInfo = async (novelName: string): Promise<NovelInfo> => {
-    const response = await axios.get(`http://localhost:3000/api/${novelName}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/${novelName}`);
     return response.data[0]; // Return the chapters
 }
 

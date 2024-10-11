@@ -2,7 +2,7 @@ import React from 'react';
 import {useParams} from "react-router-dom";
 import {NovelInfo} from "@/types/api.ts";
 import {useNovelInfo} from "@/hooks/use-novel-info.ts";
-import {useChapterList} from "@/features/table-of-contents/components/api/get-chapter-list.ts";
+import {useChapterList} from "@/features/table-of-contents/api/get-chapter-list.ts";
 
 const ChapterList = ({ novelName }: { novelName: string }) => {
     const chapterListQuery = useChapterList({novelName});
@@ -19,7 +19,7 @@ const ChapterList = ({ novelName }: { novelName: string }) => {
             {chapterList.map((chapter, index) => (
                 <a
                     key={index}
-                    href={`http://localhost:5173/novel/${encodeURIComponent(novelName)}/chapter/${index}`}
+                    href={`${import.meta.env.VITE_SITE_URL}/novel/${encodeURIComponent(novelName)}/chapter/${index}`}
                 >
                     {chapter}
                 </a>

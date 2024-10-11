@@ -11,7 +11,7 @@ function sanitizeFilename(filename: string) {
 
 // Fetch the chapter
 export const getChapter = async (novelName: string, chapterNumber: number): Promise<string> => {
-    const response = await axios.get(`http://localhost:3000/api/${novelName ? sanitizeFilename(novelName) : ""}/${chapterNumber}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/${novelName ? sanitizeFilename(novelName) : ""}/${chapterNumber}`);
     return response.data.content; // Return the chapters
 }
 

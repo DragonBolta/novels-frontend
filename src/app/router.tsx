@@ -1,10 +1,9 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SearchBar from "@/components/ui/SearchBar.tsx";
-import React, {useMemo} from "react";
-import {QueryClient, useQueryClient} from "@tanstack/react-query";
+import {useMemo} from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const createAppRouter = (queryClient: QueryClient) => {
+export const createAppRouter = () => {
     return createBrowserRouter([
         {
             path: "/",
@@ -46,9 +45,8 @@ export const createAppRouter = (queryClient: QueryClient) => {
 }
 
 export const AppRouter = () => {
-    const queryClient = useQueryClient();
 
-    const router = useMemo(() => createAppRouter(queryClient), [queryClient]);
+    const router = useMemo(() => createAppRouter(), []);
 
     return <RouterProvider router={router}/>;
 };

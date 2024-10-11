@@ -1,52 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import {NovelInfo} from '@/types/api.ts';
-import {useNovelInfo, NovelInfoProps} from "@/hooks/use-novel-info.ts";
-
-function sanitizeFilename(filename: string) {
-    // Windows invalid characters for filenames: <>:"/\|?*
-    const invalidChars = /[<>:"/\\|?*]/g;
-    // Replace invalid characters with an underscore or another placeholder
-    return filename.replace(invalidChars, '');
-}
+import {useNovelInfo} from "@/hooks/use-novel-info.ts";
+import {useChapter} from "@/features/chapter/components/api/get-chapter.ts";
 
 const NovelChapter: React.FC = () => {
     // Extracting the route parameters
-    const { novelName, chapterNumber } = useParams<{ novelName: string; chapterNumber: string }>();
+    const { novelName = "", chapterNumber = "0"} = useParams<{ novelName: string; chapterNumber: string }>();
 
-    const [novelInfo, setNovelInfo] = useState<NovelInfo>();
-    const [content, setContent] = useState<string>('');
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const novelInfoQuery = useNovelInfo({novelName});
 
-    useNovelInfo({novelName, setNovelInfo, setError} as NovelInfoProps);
+    const chapterQuery = useChapter({novelName: novelName, chapterNumber: Number(chapterNumber)})
 
-    useEffect(() => {
-        const fetchChapter = async () => {
-            try {
-                // Make an API request to fetch the chapter content
-                const response = await axios.get(`http://localhost:3000/api/${novelName ? sanitizeFilename(novelName) : ""}/${chapterNumber}`);
-                console.log(response.data)
-                setContent(response.data.content);
-            } catch (err: unknown) {
-                if (axios.isAxiosError(err)) {
-                    // This check ensures that err is an Axios error
-                    setError(err.response?.data?.error || 'Failed to fetch the chapter');
-                } else {
-                    setError('Failed to fetch the chapter');
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
+     // Dependencies to refetch if params change
 
-        fetchChapter().then();
-    }, [novelName, chapterNumber]); // Dependencies to refetch if params change
+    if (chapterQuery.isLoading) return <div>Loading...</div>;
+    if (chapterQuery.isError) return <div>Error: {chapterQuery.error.message}</div>;
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    const novelInfo: NovelInfo | undefined = novelInfoQuery.data;
+
+    const content: string | undefined = chapterQuery.data;
 
     return (
         <div>

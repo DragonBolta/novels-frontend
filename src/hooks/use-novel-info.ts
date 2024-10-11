@@ -1,29 +1,32 @@
-import {useEffect} from "react";
 import axios from "axios";
+import {queryOptions, useQuery} from "@tanstack/react-query";
+import {QueryConfig} from "@/lib/react-query.ts";
+import {NovelInfo} from "@/types/api.ts";
 
-export type NovelInfoProps = {
-    novelName: string | undefined;
-    setNovelInfo: (info: object) => void;
-    setError: (error: string) => void;
+// Fetch the chapter list
+export const getNovelInfo = async (novelName: string): Promise<NovelInfo> => {
+    const response = await axios.get(`http://localhost:3000/api/${novelName}`);
+    return response.data[0]; // Return the chapters
 }
 
-export const useNovelInfo = ({novelName, setNovelInfo, setError}: NovelInfoProps) => {
-    useEffect(() => {
-        const fetchInfo = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/${novelName}/`);
-                setNovelInfo(response.data[0]);
-            } catch (err: unknown) {
-                if (axios.isAxiosError(err)) {
-                    // This check ensures that err is an Axios error
-                    setError(err.response?.data?.error || 'Failed to fetch the novel info');
-                } else {
-                    setError('Failed to fetch the novel info');
-                }
-            }
-        }
-        if (novelName) {
-            fetchInfo().then();
-        }
-    }, [novelName, setError, setNovelInfo])
+export const getNovelInfoQueryOptions = (novelName: string) => {
+    return queryOptions({
+        queryKey: ['novelInfo', novelName],
+        queryFn: () => getNovelInfo(novelName),
+    });
 }
+
+type UseNovelInfoOptions = {
+    novelName: string;
+    queryConfig?: QueryConfig<typeof getNovelInfoQueryOptions>;
+};
+
+export const useNovelInfo = ({
+                                 novelName,
+                                 queryConfig,
+                             }: UseNovelInfoOptions) => {
+    return useQuery({
+        ...getNovelInfoQueryOptions(novelName),
+        ...queryConfig,
+    });
+};

@@ -3,11 +3,12 @@ import {queryOptions, useQuery} from "@tanstack/react-query";
 import {QueryConfig} from "@/lib/react-query.ts";
 import {NovelInfo} from "@/types/api.ts";
 
-// Fetch the chapter list
+// Get novel info
 export const getNovelInfo = async (novelName: string): Promise<NovelInfo> => {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/${novelName}`);
+    const sanitizedNovelName = novelName.replace(/\[.*?\]/g, ''); // Remove brackets and text between them
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/${sanitizedNovelName.trim()}`);
     return response.data[0]; // Return the chapters
-}
+};
 
 export const getNovelInfoQueryOptions = (novelName: string) => {
     return queryOptions({

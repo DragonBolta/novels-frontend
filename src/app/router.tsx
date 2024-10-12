@@ -1,6 +1,6 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import SearchBar from "@/components/ui/search-bar.tsx";
 import {useMemo} from "react";
+import {SearchRoute} from "@/app/routes/novels/search-page.tsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const createAppRouter = () => {
@@ -20,25 +20,25 @@ export const createAppRouter = () => {
             }
         },
         {
-            path: 'search',
-            element: <SearchBar/>
+            path: '/search',
+            element: <SearchRoute/>
         },
         {
-            path: 'novel/:novelName/',
+            path: '/novel/:novelName/',
             lazy: async () => {
                 const {NovelRoute} = await import('./routes/novels/novel-page');
                 return {Component: NovelRoute};
             }
         },
         {
-            path: 'novel/:novelName/chapter/:chapterNumber',
+            path: '/novel/:novelName/chapter/:chapterNumber',
             lazy: async () => {
                 const {ChapterRoute} = await import('./routes/novels/chapter-page');
                 return {Component: ChapterRoute};
             }
         },
         {
-            path: 'novel/:novelName/toc',
+            path: '/novel/:novelName/toc',
             lazy: async () => {
                 const {NovelRoute} = await import('./routes/novels/novel-page');
                 return {Component: NovelRoute};

@@ -1,11 +1,13 @@
 import {useNovelInfo} from "@/hooks/use-novel-info.ts";
 import {NovelInfo} from "@/types/api.ts";
 import {useParams} from "react-router-dom";
-import {AspectRatio, Image, Pill} from "@mantine/core";
+import {AspectRatio, Image, Pill, useMantineTheme} from "@mantine/core";
 import sanitizeFilename from "@/lib/sanitize.ts";
+import NovelStats from "@/features/table-of-contents/components/novel-stats.tsx";
 
 const NovelInfoDisplay = () => {
     const { novelName = ""} = useParams<{ novelName: string }>();
+    const theme = useMantineTheme();
 
     const novelInfoQuery = useNovelInfo({novelName});
 
@@ -35,11 +37,12 @@ const NovelInfoDisplay = () => {
                 </div>
                 <div className={"flex flex-col justify-start"}>
                     <b>{novelInfo["title_english"]}</b>
+                    <NovelStats likes={novelInfo['likes']} rating={novelInfo['rating']}/>
                     <p>{novelInfo["description_english"]}</p>
                     <div className={"flex flex-row justify-start space-x-2"}>
                         {novelInfo['tags'].map((tag, index) => (
                             <a href={import.meta.env.VITE_SITE_URL + "/search?tags=" + tag}>
-                                <Pill className={"border-solid border-2 border-purple-500"} classNames={{label: "flex justify-center items-center"}} key={index}>
+                                <Pill className={`border-solid border-2 border-${theme.primaryColor}-500`} classNames={{label: "flex justify-center items-center"}} key={index}>
                                     {tag}
                                 </Pill>
                             </a>

@@ -1,6 +1,8 @@
 import {searchOptions, useSearch} from "@/features/search/api/get-search.ts";
 import {useLocation} from "react-router-dom";
 import NovelCardList from "@/features/novels/components/novel-card-list.tsx";
+import SearchControl from "@/features/search/components/search-control.tsx";
+import {useEffect, useState} from "react";
 
 function parseSearchOptions(params: URLSearchParams): searchOptions {
     const tags = params.getAll('tags'); // Gets an array of all 'tags' values from the URL
@@ -24,7 +26,11 @@ function parseSearchOptions(params: URLSearchParams): searchOptions {
 
 const Search = () => {
     const location = useLocation();
-    const searchParams: searchOptions = parseSearchOptions(new URLSearchParams(location.search));
+    const [searchParams, setSearchParams] = useState<searchOptions>({});
+
+    useEffect(() => {
+        setSearchParams(parseSearchOptions(new URLSearchParams(location.search)));
+    }, [location.search])
 
     // Use the useSearch hook with the searchOptions object
     const searchQuery = useSearch({ filter: searchParams});
@@ -37,7 +43,8 @@ const Search = () => {
     if (!data) { return null; }
 
     return (
-        <div>
+        <div className={"flex flex-col items-center"}>
+            <SearchControl currentSearch={searchParams} setNewSearch={setSearchParams}/>
             <NovelCardList novels={data}/>
         </div>
     );

@@ -7,6 +7,7 @@ export type searchOptions = {
     title?: string;
     source?: string;
     tags?: string[];
+    tags_exclude?: string[];
     author?: string;
     description?: string;
     first_chapter_link?: string;
@@ -45,7 +46,7 @@ export const getSearchQueryOptions = (filter: searchOptions) => {
 }
 
 type UseSearchOptions = {
-    filter: searchOptions;
+    filter?: searchOptions;
     queryConfig?: QueryConfig<typeof getSearchQueryOptions>;
 };
 
@@ -54,7 +55,7 @@ export const useSearch = ({
                                    queryConfig,
                                }: UseSearchOptions) => {
     return useQuery({
-        ...getSearchQueryOptions(filter),
+        ...getSearchQueryOptions(filter || {}),
         ...queryConfig,
     });
 };

@@ -29,6 +29,14 @@ const NovelStats: React.FC<NovelStatsProps> = ({ rating, likes }) => {
             ;
         }
 
+        for (let i = 0; i < Math.floor(5-rating); i++) {
+            hearts.push(
+                <ThemeIcon classNames={{root: "border-0"}} size={16} variant={"transparent"}>
+                    <Star key="half" size={16} />
+                </ThemeIcon>)
+            ;
+        }
+
         return hearts;
     };
 

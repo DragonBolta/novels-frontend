@@ -18,6 +18,7 @@ export const CenteredLink: React.FC<CenteredLinkProps> = ({ label, href, route }
             classNames={{ label: "flex justify-center items-center w-fit text-center", body: "flex w-fit items-center justify-center", root: "w-full"}}
             label={label}
             href={fullHref}
+            variant={"subtle"}
         />
     );
 };

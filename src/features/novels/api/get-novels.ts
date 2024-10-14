@@ -1,10 +1,10 @@
 import axios from "axios";
 import {queryOptions, useQuery} from "@tanstack/react-query";
 import {QueryConfig} from "@/lib/react-query.ts";
-import {NovelInfo} from "@/types/api.ts";
+import {queryResponse} from "@/features/search/api/get-search.ts";
 
 // Fetch the chapter list
-export const getNovels = async (): Promise<NovelInfo[]> => {
+export const getNovels = async (): Promise<queryResponse> => {
     const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/query?`);
     return response.data; // Return the chapters
 }

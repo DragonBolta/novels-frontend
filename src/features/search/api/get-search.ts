@@ -16,9 +16,18 @@ export type searchOptions = {
     source_english?: string;
     title_english?: string;
     description_english?: string;
+    page ?: number;
+    pageSize ?: number;
 }
 
-const getSearch = async (filter: searchOptions): Promise<NovelInfo[]> => {
+export type queryResponse = {
+    search_results: NovelInfo[];
+    totalCount: number;
+    currentPage: number;
+    totalPages: number;
+}
+
+const getSearch = async (filter: searchOptions): Promise<queryResponse> => {
     const queryParams = new URLSearchParams();
 
     // Add each filter option if it exists

@@ -79,7 +79,7 @@ const SearchControl: React.FC<SearchControlProps> = ({ currentSearch, setNewSear
 
         // Update the tags state
         setTags(newTags);
-    }, [currentSearch]);
+    }, [currentSearch.tags, currentSearch.tags_exclude]);
 
     // Search params state
     const [searchParams, setSearchParams] = useState<searchOptions>(currentSearch);

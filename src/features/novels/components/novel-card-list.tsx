@@ -10,7 +10,7 @@ type NovelCardListProps = {
 
 const NovelCardList: React.FC<NovelCardListProps> = (novelInfos) => {
     const [currentPage, setCurrentPage] = useState(1); // State for current page
-    const pageSize = 100; // Define how many novels to show per page
+    const pageSize = 60; // Define how many novels to show per page
     //Search and other pages displaying filtered novels
     if (novelInfos && novelInfos.novels) {
         return (

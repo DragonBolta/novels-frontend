@@ -42,7 +42,7 @@ const SearchBar: React.FC = () => {
 
             {data && (
                 <ul>
-                    {data.map((novel, index) => (
+                    {data.search_results.map((novel, index) => (
                         <li key={index}>{novel.title_english}</li>
                     ))}
                 </ul>

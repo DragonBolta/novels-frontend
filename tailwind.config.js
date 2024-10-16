@@ -7,7 +7,12 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        '4k': '3840px',
+        // => @media (min-width: 3840px) { ... }
+      },
+    },
   },
   plugins: [
   ],

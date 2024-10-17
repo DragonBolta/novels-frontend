@@ -4,8 +4,10 @@ import React from 'react';
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
 
+
 import {Loader, MantineProvider} from '@mantine/core';
 import {queryConfig} from "@/lib/react-query.ts";
+import {Notifications} from "@mantine/notifications";
 
 type AppProviderProps = {
     children: React.ReactNode;
@@ -28,6 +30,8 @@ const AppProvider= ({ children }: AppProviderProps) => {
                 }
             >
                 <QueryClientProvider client={queryClient}>
+                    <Notifications>
+                    </Notifications>
                     {children}
                 </QueryClientProvider>
             </React.Suspense>

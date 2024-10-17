@@ -23,9 +23,9 @@ const NovelChapter: React.FC = () => {
     const content: string | undefined = chapterQuery.data;
 
     return (
-        <div>
+        <div className={"mx-8"}>
             <h1>{novelInfo ? novelInfo["title_english"] : ""} - Chapter {chapterNumber}</h1>
-            <ReactMarkdown>{content}</ReactMarkdown>
+            <ReactMarkdown className={"flex flex-wrap"}>{content}</ReactMarkdown>
         </div>
     );
 };

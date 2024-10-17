@@ -1,5 +1,4 @@
 import React from 'react';
-import HeaderBar from "@/components/ui/header.tsx";
 import Search from "@/features/search/components/search.tsx";
 
 const SearchLayout: React.FC = () => {
@@ -7,7 +6,6 @@ const SearchLayout: React.FC = () => {
     return (
         <>
             <div className="flex flex-col items-center">
-                <HeaderBar />
                 <Search/>
             </div>
         </>

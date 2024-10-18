@@ -1,7 +1,5 @@
 export type NovelInfo = {
-    _id: {
-        $oid: string;
-    };
+    _id: string;
     title: string;
     source: string;
     tags: string[];

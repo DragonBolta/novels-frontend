@@ -1,7 +1,7 @@
 import {NovelInfo} from "@/types/api.ts";
-import axios from "axios";
 import {queryOptions, useQuery} from "@tanstack/react-query";
 import {QueryConfig} from "@/lib/react-query.ts";
+import {api} from "@/lib/api.ts";
 
 export type searchOptions = {
     title?: string;
@@ -43,7 +43,7 @@ const getSearch = async (filter: searchOptions): Promise<queryResponse> => {
     });
 
     // Make the API request with query parameters
-    const response = await axios.get(import.meta.env.VITE_API_URL + '/api/query?' + queryParams.toString());
+    const response = await api.get(import.meta.env.VITE_API_URL + '/api/query?' + queryParams.toString());
     return response.data; // Assuming the response data contains the array of NovelInfo
 };
 

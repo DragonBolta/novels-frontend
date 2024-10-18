@@ -1,24 +1,19 @@
 import {api} from "@/lib/api.ts";
 
-type createCommentOption = {
-    username: string,
+type putCommentOption = {
+    commentId: string,
     comment: string,
-    novelId: string,
-    chapterNumber: string,
 }
 
-type createCommentResponse = {
+type putCommentResponse = {
     status: number,
     message: string
 }
 
-export const createComment = async ({username, comment, novelId, chapterNumber}: createCommentOption): Promise<createCommentResponse> => {
+export const putComment = async ({commentId, comment}: putCommentOption): Promise<putCommentResponse> => {
     try {
-        const response = await api.post(import.meta.env.VITE_API_URL + '/comments/', {
-            username: username,
+        const response = await api.put(import.meta.env.VITE_API_URL + '/comments/' + commentId, {
             comment: comment,
-            novelId: novelId,
-            chapterNumber: chapterNumber,
         });
         // Return the successful response
         return { status: response.status, message: response.data.message };

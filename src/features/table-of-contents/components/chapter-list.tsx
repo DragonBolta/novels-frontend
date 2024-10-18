@@ -1,4 +1,5 @@
 import {useChapterList} from "@/features/table-of-contents/api/get-chapter-list.ts";
+import {ScrollArea} from "@mantine/core";
 
 const ChapterList = ({ novelName }: { novelName: string }) => {
     const chapterListQuery = useChapterList({novelName});
@@ -18,16 +19,18 @@ const ChapterList = ({ novelName }: { novelName: string }) => {
     if (!chapterList) return null;
 
     return (
-        <div className="chapter-list flex flex-col">
-            {chapterList.map((chapter, index) => (
-                <a
-                    key={index}
-                    href={`${import.meta.env.VITE_SITE_URL}/novel/${encodeURIComponent(novelName)}/chapter/${index}`}
-                >
-                    {chapter}
-                </a>
-            ))}
-        </div>
+        <ScrollArea h={250}>
+            <div className="chapter-list flex flex-col">
+                    {chapterList.map((chapter, index) => (
+                        <a
+                            key={index}
+                            href={`${import.meta.env.VITE_SITE_URL}/novel/${encodeURIComponent(novelName)}/chapter/${index}`}
+                        >
+                            {chapter}
+                        </a>
+                    ))}
+            </div>
+        </ScrollArea>
     );
 };
 

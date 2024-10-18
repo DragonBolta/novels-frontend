@@ -23,10 +23,11 @@ export type LoginResponse = {
     message: string,
     access_token: string,
     refresh_token: string,
+    username: string,
 }
-
-export type RefreshResponse = {
-    status: number,
-    message: string,
-    access_token: string,
-}
+//
+// export type RefreshResponse = {
+//     status: number,
+//     message: string,
+//     access_token: string,
+// }

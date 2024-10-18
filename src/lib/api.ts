@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-// Set global base URL for all requests
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+export const api = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
 
 // Set global headers (optional)
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+api.defaults.headers.common['Content-Type'] = 'application/json';
 
 // Add a request interceptor to inject access token into headers globally
-axios.interceptors.request.use(
+api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('access_token');
         if (token) {
@@ -34,13 +35,15 @@ const processQueue = (error: any, token: string | null = null) => {
     failedQueue = [];
 };
 
-axios.interceptors.response.use(
+api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
+        console.log("Unauthorized token");
 
         // Handle 401 Unauthorized errors for token expiration
         if (error.response.status === 401 && !originalRequest._retry) {
+            console.log("Refreshing token");
             if (isRefreshing) {
                 return new Promise(function (resolve, reject) {
                     failedQueue.push({ resolve, reject });
@@ -58,11 +61,10 @@ axios.interceptors.response.use(
             const refreshToken = localStorage.getItem('refresh_token'); // Use your refresh token mechanism
 
             return new Promise(function (resolve, reject) {
-                axios
-                    .post('/auth/refreshToken', { token: refreshToken }) // Refresh token API
+                api
+                    .post('/auth/refreshToken', { refresh_token: refreshToken })
                     .then(({ data }) => {
-                        localStorage.setItem('access_token', data.accessToken); // Store new access token
-                        localStorage.setItem('refresh_token', data.refreshToken); // Optionally update refresh token
+                        localStorage.setItem('access_token', data.accessToken);
 
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.accessToken;
                         originalRequest.headers['Authorization'] = 'Bearer ' + data.accessToken;
@@ -71,6 +73,10 @@ axios.interceptors.response.use(
                         resolve(axios(originalRequest));
                     })
                     .catch((err) => {
+                        if (err.response && err.response.status === 401) {
+                            alert('Your session has expired. Please log in again.');
+                            window.location.href = '/auth';
+                        }
                         processQueue(err, null);
                         reject(err);
                     })

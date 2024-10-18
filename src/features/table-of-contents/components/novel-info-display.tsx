@@ -35,9 +35,9 @@ const NovelInfoDisplay = () => {
                         <p>{novelInfo["description_english"]}</p>
                         <div className={"flex flex-row justify-start space-x-2"}>
                             {novelInfo['tags'].map((tag, index) => (
-                                <a href={import.meta.env.VITE_SITE_URL + "/search?tags=" + tag}>
+                                <a key={index} href={import.meta.env.VITE_SITE_URL + "/search?tags=" + tag}>
                                     <Pill className={`border-solid border-2 border-${theme.primaryColor}-500`}
-                                          classNames={{label: "flex justify-center items-center"}} key={index}>
+                                          classNames={{label: "flex justify-center items-center"}}>
                                         {tag}
                                     </Pill>
                                 </a>

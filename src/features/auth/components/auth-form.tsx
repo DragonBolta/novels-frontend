@@ -68,6 +68,7 @@ export function AuthenticationForm(props: PaperProps) {
                 if (response.status == 200) {
                     localStorage.setItem('access_token', response.access_token);
                     localStorage.setItem('refresh_token', response.refresh_token);
+                    localStorage.setItem('username', response.username);
                     notifications.show({color: 'green', position: 'bottom-center', title: 'Success!', message: 'Logged in as ' + values.username});
                     navigate('/');
                 }

@@ -15,24 +15,24 @@ const NovelStats: React.FC<NovelStatsProps> = ({ rating, likes }) => {
 
         for (let i = 0; i < fullHearts; i++) {
             hearts.push(
-                <ThemeIcon classNames={{root: "border-0"}} size={16} variant={"transparent"}>
-                    <Star key={i} size={16} weight={"fill"}/>
+                <ThemeIcon key={i} classNames={{root: "border-0"}} size={16} variant={"transparent"}>
+                    <Star size={16} weight={"fill"}/>
                 </ThemeIcon>
             );
         }
 
         if (hasHalfHeart) {
             hearts.push(
-                <ThemeIcon classNames={{root: "border-0"}} size={16} variant={"transparent"}>
-                    <StarHalf key="half" size={16} weight={"fill"}/>
+                <ThemeIcon key="half" classNames={{root: "border-0"}} size={16} variant={"transparent"}>
+                    <StarHalf size={16} weight={"fill"}/>
                 </ThemeIcon>)
             ;
         }
 
         for (let i = 0; i < Math.floor(5-rating); i++) {
             hearts.push(
-                <ThemeIcon classNames={{root: "border-0"}} size={16} variant={"transparent"}>
-                    <Star key="half" size={16} />
+                <ThemeIcon key={`emptyhalf ${i}`} classNames={{root: "border-0"}} size={16} variant={"transparent"}>
+                    <Star  size={16} />
                 </ThemeIcon>)
             ;
         }

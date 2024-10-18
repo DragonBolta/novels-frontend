@@ -1,4 +1,4 @@
-import axios from "axios";
+import {api} from "@/lib/api.ts";
 
 type deleteCommentOption = {
     commentId: string,
@@ -11,7 +11,7 @@ type deleteCommentResponse = {
 
 export const deleteComment = async ({commentId}: deleteCommentOption): Promise<deleteCommentResponse> => {
     try {
-        const response = await axios.delete(import.meta.env.VITE_API_URL + '/comments/' + commentId);
+        const response = await api.delete(import.meta.env.VITE_API_URL + '/comments/' + commentId);
         // Return the successful response
         return { status: response.status, message: response.data.message };
     } catch (error: any) {

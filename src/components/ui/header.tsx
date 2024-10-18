@@ -18,7 +18,7 @@ const HeaderBar = () => {
 
     return (
         <>
-            <div className="flex flex-row h-1/6 w-full items-center justify-evenly m-3 md:pr-6 md:justify-end">
+            <div className="flex flex-row h-1/6 w-full items-center justify-evenly p-3 md:pr-6 md:justify-end">
                 <div className={"md:w-[100px]"}>
                     <CenteredInternalLink label="Home" route={"/"}/>
                 </div>

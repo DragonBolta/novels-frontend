@@ -75,6 +75,9 @@ api.interceptors.response.use(
                     .catch((err) => {
                         if (err.response && err.response.status === 401) {
                             alert('Your session has expired. Please log in again.');
+                            localStorage.removeItem('access_token');
+                            localStorage.removeItem('refresh_token');
+                            localStorage.removeItem('username');
                             window.location.href = '/auth';
                         }
                         processQueue(err, null);

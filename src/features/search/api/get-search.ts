@@ -42,6 +42,10 @@ const getSearch = async (filter: searchOptions): Promise<queryResponse> => {
         }
     });
 
+    if (localStorage.getItem('username') && localStorage.getItem('nsfw') === "true") {
+        queryParams.append('nsfw', 'true');
+    }
+
     // Make the API request with query parameters
     const response = await api.get(import.meta.env.VITE_API_URL + '/api/query?' + queryParams.toString());
     return response.data; // Assuming the response data contains the array of NovelInfo

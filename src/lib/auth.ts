@@ -32,12 +32,17 @@ export const registerWithEmailAndPassword = async (data: RegisterInput): Promise
     }
 }
 
-
-
 export const loginWithEmailAndPassword = async (data: LoginInput): Promise<LoginResponse> => {
     const response= await api.post(import.meta.env.VITE_API_URL + '/auth/login', {
         email: data.email,
         password: data.password,
     });
     return {status: response.status, message: response.data.message, access_token: response.data.token, refresh_token: response.data.refreshToken, username: response.data.username}
+}
+
+export const logout = async () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('username');
+    window.location.reload();
 }
